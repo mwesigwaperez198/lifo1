@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Environment files — NEVER commit real secrets
+.env.local
+.env*.local
+.env
+
+# Only keep .env.example tracked
+!.env.example
+
+# Vercel
+.vercel/
+
+# Testing / coverage
+coverage/
+test-results/
+playwright-report/
+
+# TypeScript / build cache
+*.tsbuildinfo
+next-env.d.ts
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
