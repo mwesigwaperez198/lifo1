@@ -51,20 +51,16 @@ export function StatCard({
   tone?: string;
 }) {
   return (
-    <div className="glass p-4 hover-lift fade-up animate-in">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <div className="text-[0.68rem] uppercase tracking-wider text-muted font-semibold truncate">{label}</div>
-          <div className="text-xl sm:text-2xl font-bold mt-1 truncate">{value}</div>
-          {sub && <div className="text-xs text-soft mt-1">{sub}</div>}
-        </div>
-        <div
-          className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center text-lg feature-icon"
-          style={{ background: `color-mix(in srgb, ${tone} 16%, transparent)`, color: tone, borderColor: `color-mix(in srgb, ${tone} 25%, transparent)` }}
-        >
-          {icon}
-        </div>
+    <div className="glass p-4 hover-lift fade-up animate-in text-center flex flex-col items-center">
+      <div
+        className="w-10 h-10 mb-2 rounded-xl flex items-center justify-center text-lg feature-icon"
+        style={{ background: `color-mix(in srgb, ${tone} 16%, transparent)`, color: tone, borderColor: `color-mix(in srgb, ${tone} 25%, transparent)` }}
+      >
+        {icon}
       </div>
+      <div className="text-[0.68rem] uppercase tracking-wider text-muted font-semibold">{label}</div>
+      <div className="text-xl sm:text-2xl font-bold mt-0.5 truncate">{value}</div>
+      {sub && <div className="text-xs text-soft mt-1">{sub}</div>}
     </div>
   );
 }

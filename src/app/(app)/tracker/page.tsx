@@ -38,19 +38,19 @@ export default async function TrackerPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <SectionHeader title="Price Tracker" subtitle="Compare stores, watch price history and grab the best deals." icon={<TrendingDown size={18} />} action={<Link href="/purchases" className="btn btn-ghost btn-sm">+ Add products</Link>} />
 
       {items.length === 0 ? (
         <EmptyState icon="📉" title="Nothing to track yet" subtitle="Add products in the Purchase Planner, then log prices from different stores to see the history graph." action={<Link href="/purchases" className="btn btn-primary btn-sm">Go to planner</Link>} />
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {items.map((p) => {
             const prices = byPurchase.get(p.id) ?? [];
             const st = statsFor(prices);
             const desired = toNum(p.desiredPrice);
             return (
-              <div key={p.id} className="glass p-5 fade-up">
+              <div key={p.id} className="glass p-4 fade-up">
                 <div className="flex items-start justify-between gap-3 flex-wrap">
                   <div>
                     <h3 className="font-bold">{p.productName}</h3>
@@ -64,7 +64,7 @@ export default async function TrackerPage() {
                 </div>
 
                 {st ? (
-                  <div className="grid lg:grid-cols-3 gap-4 mt-4">
+                  <div className="grid lg:grid-cols-3 gap-3 mt-4">
                     <div className="lg:col-span-2">
                       <Line
                         labels={prices.map((pr) => new Date(pr.recordedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }))}

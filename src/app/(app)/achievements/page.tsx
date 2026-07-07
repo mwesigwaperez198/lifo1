@@ -28,10 +28,10 @@ export default async function AchievementsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <SectionHeader title="Achievements" subtitle="Earn badges, climb levels and celebrate your progress." icon={<Trophy size={18} />} />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icon="🏅" label="Badges earned" value={`${earnedCount}/${total}`} tone="#f59e0b" />
         <StatCard icon="⭐" label="Level" value={level} sub="Explorer tier" tone="var(--accent)" />
         <StatCard icon="💎" label="Platinum" value={tierCount.platinum ?? 0} tone="#7dd3fc" />
@@ -43,7 +43,7 @@ export default async function AchievementsPage() {
         <div className="bar"><span style={{ width: `${progress}%` }} /></div>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         {ACHIEVEMENTS.map((a, i) => {
           const got = earnedMap.get(a.code);
           const tier = TIER_META[a.tier];

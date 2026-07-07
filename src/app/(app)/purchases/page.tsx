@@ -21,7 +21,7 @@ export default async function PurchasesPage() {
   const wishlistValue = items.filter((p) => p.status !== "bought").reduce((s, p) => s + (toNum(p.currentPrice) || toNum(p.desiredPrice)), 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <SectionHeader
         title="Purchase Planner"
         subtitle="Your smart wishlist — track products, target prices and the best time to buy."
@@ -29,7 +29,7 @@ export default async function PurchasesPage() {
         action={<CreatePurchaseButton />}
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icon="💖" label="Wishlist" value={wishlist.length} tone="#ec4899" />
         <StatCard icon="📋" label="Planned" value={planned.length} tone="#f59e0b" />
         <StatCard icon="✅" label="Bought" value={bought.length} tone="#10b981" />
@@ -39,7 +39,7 @@ export default async function PurchasesPage() {
       {items.length === 0 ? (
         <EmptyState icon="🛒" title="Your wishlist is empty" subtitle="Add products you're eyeing, set a target price, and let the Price Tracker watch for drops." action={<CreatePurchaseButton />} />
       ) : (
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {items.map((p) => <PurchaseCard key={p.id} purchase={p} />)}
         </div>
       )}

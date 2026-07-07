@@ -109,40 +109,35 @@ export function PurchaseCard({ purchase }: { purchase: Purchase }) {
   };
 
   return (
-    <div className="glass p-4 hover-lift fade-up overflow-hidden">
-      <div className="flex gap-3">
-        <div className="w-16 h-16 rounded-xl shrink-0 grid place-items-center text-2xl overflow-hidden" style={{ background: "var(--surface-2)" }}>
-          {purchase.image ? <img src={purchase.image} alt="" className="w-full h-full object-cover" /> : cat.icon}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="font-bold leading-tight">{purchase.productName}</h3>
-            <div className="flex gap-1 shrink-0">
-              {purchase.link && (
-                <a href={purchase.link} target="_blank" rel="noreferrer" className="btn-icon btn btn-ghost btn-sm"><ExternalLink size={14} /></a>
-              )}
-            </div>
-          </div>
-          <div className="flex gap-1.5 mt-1.5 flex-wrap">
-            <Badge tone={prio.color}>{prio.icon} {prio.label}</Badge>
-            <Badge>{cat.icon} {purchase.category}</Badge>
-            {purchase.deadline && <Badge>📅 {formatDate(purchase.deadline)}</Badge>}
-          </div>
-          <div className="flex items-center gap-3 mt-2 text-sm">
-            <span className="font-bold">{money(current || desired)}</span>
-            {dropped && (
-              <Badge tone="var(--success)"><Tag size={11} /> ↓ {Math.round(((desired - current) / desired) * 100)}%</Badge>
-            )}
-            {desired > 0 && current > 0 && current > desired && (
-              <span className="text-xs" style={{ color: "var(--warning)" }}>↑ above target</span>
-            )}
-          </div>
-          <div className="flex gap-2 mt-3">
-            <button className="btn btn-sm btn-ghost" onClick={cycle}>{status.icon} {status.label}</button>
-            <button className="btn btn-sm btn-ghost" onClick={() => setEdit(true)}><Pencil size={14} /> Edit</button>
-            <button className="btn btn-sm btn-danger" onClick={del}><Trash2 size={14} /></button>
-          </div>
-        </div>
+    <div className="glass p-4 hover-lift fade-up overflow-hidden flex flex-col text-center">
+      <div className="relative w-full h-32 rounded-xl mb-3 grid place-items-center text-4xl overflow-hidden" style={{ background: "var(--surface-2)" }}>
+        {purchase.image ? <img src={purchase.image} alt="" className="w-full h-full object-cover" /> : cat.icon}
+        {dropped && (
+          <span className="absolute top-2 right-2"><Badge tone="var(--success)"><Tag size={11} /> ↓ {Math.round(((desired - current) / desired) * 100)}%</Badge></span>
+        )}
+      </div>
+      <h3 className="font-bold leading-tight">{purchase.productName}</h3>
+
+      <div className="flex justify-center gap-1.5 mt-2 flex-wrap">
+        <Badge tone={prio.color}>{prio.icon} {prio.label}</Badge>
+        <Badge>{cat.icon} {purchase.category}</Badge>
+      </div>
+
+      <div className="flex items-center justify-center gap-2 mt-3 text-sm">
+        <span className="font-bold">{money(current || desired)}</span>
+        {desired > 0 && current > 0 && current > desired && (
+          <span className="text-xs" style={{ color: "var(--warning)" }}>↑ above target</span>
+        )}
+      </div>
+      {purchase.deadline && <div className="text-xs text-muted mt-2">📅 {formatDate(purchase.deadline)}</div>}
+
+      <div className="flex gap-1.5 mt-auto pt-3">
+        {purchase.link && (
+          <a href={purchase.link} target="_blank" rel="noreferrer" className="btn btn-sm btn-ghost flex-1"><ExternalLink size={14} /> Open</a>
+        )}
+        <button className="btn btn-sm btn-ghost" onClick={cycle}>{status.icon} {status.label}</button>
+        <button className="btn btn-sm btn-ghost" onClick={() => setEdit(true)}><Pencil size={14} /></button>
+        <button className="btn btn-sm btn-danger" onClick={del}><Trash2 size={14} /></button>
       </div>
       <Modal open={edit} onClose={() => setEdit(false)} title="Edit product">
         <PurchaseEditForm purchase={purchase} onDone={() => setEdit(false)} />

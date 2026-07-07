@@ -118,50 +118,46 @@ export function GoalCard({ goal }: { goal: Goal }) {
   };
 
   return (
-    <div className="glass p-4 hover-lift fade-up" style={done ? { opacity: 0.7 } : undefined}>
-      <div className="flex items-start gap-3">
-        <div className="w-11 h-11 rounded-xl grid place-items-center text-xl shrink-0" style={{ background: `color-mix(in srgb, ${cat.color} 20%, transparent)`, color: cat.color }}>
-          {cat.icon}
+    <div className="glass p-4 hover-lift fade-up text-center flex flex-col" style={done ? { opacity: 0.7 } : undefined}>
+      <div className="w-14 h-14 rounded-2xl mx-auto mb-3 grid place-items-center text-2xl" style={{ background: `color-mix(in srgb, ${cat.color} 18%, transparent)`, color: cat.color }}>
+        {cat.icon}
+      </div>
+      <h3 className={`font-bold leading-tight ${done ? "line-through" : ""}`}>{goal.title}</h3>
+
+      <div className="flex justify-center gap-1.5 mt-2 flex-wrap">
+        {done && <Badge tone="var(--success)">✅ Done</Badge>}
+        <Badge tone={prio.color}>{prio.icon} {prio.label}</Badge>
+      </div>
+
+      {goal.description && <p className="text-sm text-soft mt-2 line-clamp-2">{goal.description}</p>}
+
+      {(tgt > 0 || prog > 0) && (
+        <div className="mt-3">
+          <div className="flex justify-between text-xs text-soft mb-1">
+            <span>{money(cur)} of {money(tgt)}</span>
+            <span className="font-semibold">{prog}%</span>
+          </div>
+          <Progress value={prog} />
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className={`font-bold ${done ? "line-through" : ""}`}>{goal.title}</h3>
-            {done && <Badge tone="var(--success)">✅ Done</Badge>}
-            <Badge tone={prio.color}>{prio.icon} {prio.label}</Badge>
-          </div>
-          {goal.description && <p className="text-sm text-soft mt-1 line-clamp-2">{goal.description}</p>}
+      )}
 
-          {(tgt > 0 || prog > 0) && (
-            <div className="mt-3">
-              <div className="flex justify-between text-xs text-soft mb-1">
-                <span>{money(cur)} of {money(tgt)}</span>
-                <span className="font-semibold">{prog}%</span>
-              </div>
-              <Progress value={prog} />
-            </div>
-          )}
-
-          <div className="flex items-center gap-3 mt-3 text-xs text-muted flex-wrap">
-            {goal.deadline && (
-              <span className="inline-flex items-center gap-1" style={d !== null && d < 0 && !done ? { color: "var(--danger)" } : undefined}>
-                <CalendarClock size={13} /> {formatDate(goal.deadline)}
-                {d !== null && !done && (d < 0 ? ` · ${Math.abs(d)}d overdue` : d <= 7 ? ` · in ${d}d` : "")}
-              </span>
-            )}
-          </div>
-
-          <div className="flex gap-2 mt-3">
-            <button className="btn btn-sm btn-ghost" onClick={complete}>
-              <Check size={14} /> {done ? "Reopen" : "Complete"}
-            </button>
-            <button className="btn btn-sm btn-ghost" onClick={() => setEdit(true)}>
-              <Pencil size={14} /> Edit
-            </button>
-            <button className="btn btn-sm btn-danger" onClick={remove}>
-              <Trash2 size={14} />
-            </button>
-          </div>
+      {goal.deadline && (
+        <div className="text-xs text-muted mt-3 inline-flex items-center justify-center gap-1" style={d !== null && d < 0 && !done ? { color: "var(--danger)" } : undefined}>
+          <CalendarClock size={13} /> {formatDate(goal.deadline)}
+          {d !== null && !done && (d < 0 ? ` · ${Math.abs(d)}d overdue` : d <= 7 ? ` · in ${d}d` : "")}
         </div>
+      )}
+
+      <div className="flex gap-1.5 mt-auto pt-3" style={{ marginTop: goal.deadline || (tgt > 0 || prog > 0) ? undefined : "auto" }}>
+        <button className="btn btn-sm btn-ghost flex-1" onClick={complete}>
+          <Check size={14} /> {done ? "Reopen" : "Done"}
+        </button>
+        <button className="btn btn-sm btn-ghost" onClick={() => setEdit(true)}>
+          <Pencil size={14} />
+        </button>
+        <button className="btn btn-sm btn-danger" onClick={remove}>
+          <Trash2 size={14} />
+        </button>
       </div>
 
       <Modal open={edit} onClose={() => setEdit(false)} title="Edit goal">

@@ -24,7 +24,7 @@ export default async function GoalsPage() {
   const other = allGoals.filter((g) => g.status !== "active" && g.status !== "completed");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <SectionHeader
         title="Goals"
         subtitle="Define what you're working toward and track every step."
@@ -32,7 +32,7 @@ export default async function GoalsPage() {
         action={<CreateGoalButton />}
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icon="🎯" label="Active" value={active.length} tone="#8b5cf6" />
         <StatCard icon="✅" label="Completed" value={completed.length} tone="#10b981" />
         <StatCard icon="💰" label="Target total" value={money(stats.totalTarget)} tone="#f59e0b" />
@@ -46,7 +46,7 @@ export default async function GoalsPage() {
           {active.length > 0 && (
             <div>
               <h2 className="font-bold mb-3 flex items-center gap-2"><Clock size={16} className="text-muted" /> Active ({active.length})</h2>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {active.map((g) => <GoalCard key={g.id} goal={g} />)}
               </div>
             </div>
@@ -54,7 +54,7 @@ export default async function GoalsPage() {
           {completed.length > 0 && (
             <div>
               <h2 className="font-bold mb-3 flex items-center gap-2"><CheckCircle2 size={16} style={{ color: "var(--success)" }} /> Completed ({completed.length})</h2>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {completed.map((g) => <GoalCard key={g.id} goal={g} />)}
               </div>
             </div>
@@ -62,7 +62,7 @@ export default async function GoalsPage() {
           {other.length > 0 && (
             <div>
               <h2 className="font-bold mb-3 text-muted">Archived</h2>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {other.map((g) => <GoalCard key={g.id} goal={g} />)}
               </div>
             </div>

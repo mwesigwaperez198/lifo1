@@ -39,7 +39,7 @@ export default async function SavingsPage() {
   const months = capacity > 0 ? Math.ceil(remaining / capacity) : null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <SectionHeader
         title="Savings & Budget"
         subtitle="Track income, expenses and watch your money grow toward each goal."
@@ -52,7 +52,7 @@ export default async function SavingsPage() {
         }
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icon="💵" label="Total saved" value={money(totalSaved)} tone="#10b981" />
         <StatCard icon="🧾" label="Total expenses" value={money(totalExpenses)} tone="#f43f5e" />
         <StatCard icon="⚖️" label="Net" value={money(net)} tone={net >= 0 ? "var(--success)" : "var(--danger)"} />
@@ -60,7 +60,7 @@ export default async function SavingsPage() {
       </div>
 
       {capacity > 0 && remaining > 0 && (
-        <div className="glass p-5 fade-up" style={{ background: "linear-gradient(135deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent)" }}>
+        <div className="glass p-4 fade-up" style={{ background: "linear-gradient(135deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent)" }}>
           <h3 className="font-bold">🔮 Financial forecast</h3>
           <p className="text-sm text-soft mt-1">
             At your current pace (~{money(capacity)}/mo available), you&apos;ll fully fund your active goals in <b>{months} month{months === 1 ? "" : "s"}</b> ({money(remaining)} remaining).
@@ -68,7 +68,7 @@ export default async function SavingsPage() {
         </div>
       )}
 
-      <div className="glass p-5 fade-up">
+      <div className="glass p-4 fade-up">
         <div className="flex items-center justify-between mb-2">
           <h3 className="font-bold">Monthly trend</h3>
           <Legend items={[{ color: "var(--accent)", label: "Savings" }, { color: "#f43f5e", label: "Expenses" }]} />
@@ -80,7 +80,7 @@ export default async function SavingsPage() {
         )}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-2 gap-3">
         <div>
           <h3 className="font-bold mb-3">Savings log</h3>
           {savRows.length === 0 ? (
