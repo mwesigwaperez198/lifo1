@@ -20,17 +20,16 @@ export function SectionHeader({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex items-end justify-between gap-3 mb-4 flex-wrap">
-      <div className="flex items-center gap-3">
+    <div className="flex items-end justify-between gap-3 mb-3 flex-wrap">
+      <div className="flex items-center gap-2.5">
         {icon && (
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-            style={{ background: "color-mix(in srgb, var(--accent) 18%, transparent)" }}>
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg feature-icon">
             {icon}
           </div>
         )}
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">{title}</h1>
-          {subtitle && <p className="text-sm text-soft">{subtitle}</p>}
+          <h2 className="text-lg sm:text-xl font-bold tracking-tight">{title}</h2>
+          {subtitle && <p className="text-sm text-soft mt-0.5">{subtitle}</p>}
         </div>
       </div>
       {action}
@@ -52,16 +51,16 @@ export function StatCard({
   tone?: string;
 }) {
   return (
-    <div className="glass p-4 sm:p-5 hover-lift fade-up">
+    <div className="glass p-4 hover-lift fade-up animate-in">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[0.7rem] uppercase tracking-wider text-muted font-semibold truncate">{label}</div>
-          <div className="text-2xl font-bold mt-1 truncate">{value}</div>
+          <div className="text-[0.68rem] uppercase tracking-wider text-muted font-semibold truncate">{label}</div>
+          <div className="text-xl sm:text-2xl font-bold mt-1 truncate">{value}</div>
           {sub && <div className="text-xs text-soft mt-1">{sub}</div>}
         </div>
         <div
-          className="w-11 h-11 shrink-0 rounded-xl flex items-center justify-center text-xl"
-          style={{ background: `color-mix(in srgb, ${tone} 20%, transparent)`, color: tone }}
+          className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center text-lg feature-icon"
+          style={{ background: `color-mix(in srgb, ${tone} 16%, transparent)`, color: tone, borderColor: `color-mix(in srgb, ${tone} 25%, transparent)` }}
         >
           {icon}
         </div>
@@ -81,8 +80,8 @@ export function Progress({ value, className = "" }: { value: number; className?:
 export function Badge({ children, tone }: { children: ReactNode; tone?: string }) {
   return (
     <span
-      className="chip"
-      style={tone ? { background: `color-mix(in srgb, ${tone} 18%, transparent)`, color: tone, borderColor: `color-mix(in srgb, ${tone} 35%, transparent)` } : undefined}
+      className="feature-pill"
+      style={tone ? { background: `color-mix(in srgb, ${tone} 14%, transparent)`, color: tone, borderColor: `color-mix(in srgb, ${tone} 30%, transparent)` } : undefined}
     >
       {children}
     </span>
@@ -101,10 +100,10 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="glass p-8 text-center fade-up">
-      <div className="text-5xl mb-3 floaty inline-block">{icon}</div>
+    <div className="glass p-8 text-center fade-up animate-in">
+      <div className="text-4xl mb-3 floaty inline-block">{icon}</div>
       <h3 className="text-lg font-bold">{title}</h3>
-      {subtitle && <p className="text-sm text-soft mt-1 max-w-md mx-auto">{subtitle}</p>}
+      {subtitle && <p className="text-sm text-soft mt-1.5 max-w-md mx-auto">{subtitle}</p>}
       {action && <div className="mt-4">{action}</div>}
     </div>
   );

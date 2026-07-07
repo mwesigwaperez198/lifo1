@@ -184,8 +184,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
 
       <div className="lg:pl-64">
         {/* Topbar */}
-        <header className="sticky top-0 z-20 px-4 sm:px-6 py-3 flex items-center gap-3 backdrop-blur-md"
-          style={{ background: "color-mix(in srgb, var(--bg) 70%, transparent)", borderBottom: "1px solid var(--border)" }}>
+        <header className="sticky top-0 z-20 glass-nav px-3 sm:px-5 py-2.5 flex items-center gap-3">
           <button className="btn-icon btn-ghost btn lg:hidden" onClick={() => setOpen(true)}>
             <Menu size={20} />
           </button>
@@ -229,20 +228,20 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
           </div>
         </header>
 
-        <main className="px-4 sm:px-6 py-6 pb-24 lg:pb-6 max-w-7xl mx-auto">{children}</main>
+        <main className="px-3 sm:px-5 py-5 pb-24 lg:pb-6 max-w-7xl mx-auto">{children}</main>
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 glass border-t"
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 glass-nav"
         style={{ borderRadius: 0, paddingBottom: "env(safe-area-inset-bottom)" }}>
-        <div className="flex items-center justify-around px-2 py-1.5">
+        <div className="flex items-center justify-around px-1 py-1.5">
           {MOBILE_NAV.map((item) => {
             const active = pathname === item.href || pathname.startsWith(item.href + "/");
             const Icon = item.icon;
             return (
               <Link key={item.href} href={item.href}
-                className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl text-[0.65rem] font-medium transition-colors ${active ? "text-[var(--accent)]" : "text-muted"}`}>
-                <Icon size={20} strokeWidth={active ? 2.2 : 1.6} />
+                className={`flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-xl text-[0.62rem] font-semibold transition-all ${active ? "text-[var(--accent)] bg-[rgba(124,58,237,0.12)]" : "text-muted"}`}>
+                <Icon size={19} strokeWidth={active ? 2.2 : 1.6} />
                 <span>{item.label}</span>
               </Link>
             );

@@ -31,21 +31,21 @@ export default async function DashboardPage() {
   const accent = prefs.themeColor || "var(--accent)";
 
   return (
-    <div className="space-y-5 sm:space-y-6">
-      <div className="fade-up">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">{greeting}, {firstName} 👋</h1>
-        <p className="text-sm sm:text-base text-soft">Here&apos;s your life at a glance — {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}.</p>
+    <div className="space-y-4 sm:space-y-5">
+      <div className="animate-in">
+        <h1 className="text-xl sm:text-2xl font-bold">{greeting}, {firstName} 👋</h1>
+        <p className="text-sm text-soft mt-0.5">Here&apos;s your life at a glance — {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}.</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icon="🎯" label="Active goals" value={stats.activeGoals} sub={`${stats.completedGoals} completed`} tone="#8b5cf6" />
         <StatCard icon="💰" label="Saved toward goals" value={money(stats.totalSaved)} sub={`of ${money(stats.totalTarget)}`} tone="#10b981" />
         <StatCard icon="🏅" label="Achievements" value={stats.achievementCount} sub={`${stats.purchaseCount} products tracked`} tone="#f59e0b" />
         <StatCard icon="📈" label="Overall progress" value={`${stats.overallProgress}%`} sub={`${stats.wishlistCount} on wishlist`} tone="var(--accent)" />
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-4">
-        <div className="glass p-5 fade-up fade-up-1">
+      <div className="grid lg:grid-cols-3 gap-3">
+        <div className="glass p-4 fade-up fade-up-1">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-bold">Goal funding</h3>
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="glass p-5 lg:col-span-2 fade-up fade-up-2">
+        <div className="glass p-4 lg:col-span-2 fade-up fade-up-2">
           <div className="flex items-center justify-between mb-2">
             <h3 className="font-bold">Savings vs expenses</h3>
             <Legend items={[{ color: accent, label: "Savings" }, { color: "#f43f5e", label: "Expenses" }]} />
@@ -78,8 +78,8 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-4">
-        <div className="glass p-5 fade-up fade-up-3">
+      <div className="grid lg:grid-cols-3 gap-3">
+        <div className="glass p-4 fade-up fade-up-3">
           <SectionHeaderBreak title="Upcoming deadlines" icon={<CalendarClock size={18} />} />
           {stats.upcoming.length === 0 && stats.overdue.length === 0 ? (
             <p className="text-sm text-muted">No deadlines in the next 2 weeks. 🎉</p>
@@ -101,7 +101,7 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        <div className="glass p-5 fade-up fade-up-3">
+        <div className="glass p-4 fade-up fade-up-3">
           <SectionHeaderBreak title="Needs attention" icon={<AlertTriangle size={18} />} />
           {stats.abandoned.length === 0 ? (
             <p className="text-sm text-muted">All goals have healthy momentum. 👍</p>
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        <Link href="/assistant" className="glass p-5 hover-lift fade-up fade-up-4 block" style={{ background: `linear-gradient(135deg, color-mix(in srgb, ${accent} 16%, transparent), transparent)` }}>
+        <Link href="/assistant" className="glass p-4 hover-lift fade-up fade-up-4 block" style={{ background: `linear-gradient(135deg, color-mix(in srgb, ${accent} 14%, transparent), transparent)` }}>
           <div className="text-4xl mb-2 floaty inline-block">{prefs.avatar || "✨"}</div>
           <h3 className="font-bold">{prefs.aiName || "Chloe"} says</h3>
           <p className="text-sm text-soft mt-1">
@@ -141,7 +141,7 @@ export default async function DashboardPage() {
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {recentPurchases.map((p) => (
-              <div key={p.id} className="glass p-4">
+              <div key={p.id} className="glass p-3.5 hover-lift">
                 <div className="text-xs text-muted">{p.category}</div>
                 <div className="font-semibold text-sm mt-0.5 truncate">{p.productName}</div>
                 <div className="text-lg font-bold mt-1">{money(toNum(p.currentPrice) || toNum(p.desiredPrice))}</div>
@@ -157,9 +157,9 @@ export default async function DashboardPage() {
 
 function SectionHeaderBreak({ title, icon }: { title: string; icon: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-2 mb-3">
-      <span style={{ color: "var(--accent)" }}>{icon}</span>
-      <h3 className="font-bold">{title}</h3>
+    <div className="flex items-center gap-2 mb-2.5">
+      <span className="icon-accent">{icon}</span>
+      <h3 className="font-bold text-sm">{title}</h3>
     </div>
   );
 }
