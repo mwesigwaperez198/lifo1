@@ -130,7 +130,7 @@ export function Line({
   const x = (i: number) => (n <= 1 ? W / 2 : pad + (i * (W - 2 * pad)) / (n - 1));
   const y = (v: number) => H - pad - (v / max) * (H - 2 * pad);
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={height} preserveAspectRatio="none">
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={height} preserveAspectRatio="xMidYMid meet">
       {[0.25, 0.5, 0.75, 1].map((g, i) => (
         <line key={i} x1={pad} x2={W - pad} y1={H - pad - g * (H - 2 * pad)} y2={H - pad - g * (H - 2 * pad)} stroke="var(--border)" strokeWidth="1" />
       ))}

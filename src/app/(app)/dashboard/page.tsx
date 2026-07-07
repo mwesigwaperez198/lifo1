@@ -31,10 +31,10 @@ export default async function DashboardPage() {
   const accent = prefs.themeColor || "var(--accent)";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       <div className="fade-up">
-        <h1 className="text-2xl sm:text-3xl font-bold">{greeting}, {firstName} 👋</h1>
-        <p className="text-soft">Here&apos;s your life at a glance — {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}.</p>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">{greeting}, {firstName} 👋</h1>
+        <p className="text-sm sm:text-base text-soft">Here&apos;s your life at a glance — {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}.</p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

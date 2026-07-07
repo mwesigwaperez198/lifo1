@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, useCallback, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -61,6 +61,14 @@ function applyTheme(theme: string, accent?: string | null) {
   }
 }
 
+const MOBILE_NAV = [
+  { href: "/dashboard", label: "Home", icon: LayoutDashboard },
+  { href: "/goals", label: "Goals", icon: Target },
+  { href: "/assistant", label: "Chloe", icon: Sparkles },
+  { href: "/savings", label: "Savings", icon: PiggyBank },
+  { href: "/settings", label: "More", icon: Menu },
+];
+
 export function AppShell({ user, children }: { user: ShellUser; children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -71,6 +79,17 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
   useEffect(() => {
     applyTheme(theme, user.accentColor);
   }, [theme, user.accentColor]);
+
+  const lockScroll = useCallback(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  useEffect(() => lockScroll(), [lockScroll]);
 
   const { data: notifData } = useApiQuery<{ notifications: RecentNotification[]; unread: number }>(
     qk.notifications,
@@ -185,7 +204,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
               )}
             </button>
             {showNotif && (
-              <div className="absolute right-0 mt-2 w-80 glass p-3 z-40 fade-up">
+              <div className="absolute right-0 mt-2 w-[min(20rem,calc(100vw-2rem))] glass p-3 z-40 fade-up">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-bold text-sm">Notifications</span>
                   {unread > 0 && (
@@ -210,8 +229,26 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
           </div>
         </header>
 
-        <main className="px-4 sm:px-6 py-6 max-w-7xl mx-auto">{children}</main>
+        <main className="px-4 sm:px-6 py-6 pb-24 lg:pb-6 max-w-7xl mx-auto">{children}</main>
       </div>
+
+      {/* Mobile bottom nav */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 glass border-t"
+        style={{ borderRadius: 0, paddingBottom: "env(safe-area-inset-bottom)" }}>
+        <div className="flex items-center justify-around px-2 py-1.5">
+          {MOBILE_NAV.map((item) => {
+            const active = pathname === item.href || pathname.startsWith(item.href + "/");
+            const Icon = item.icon;
+            return (
+              <Link key={item.href} href={item.href}
+                className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl text-[0.65rem] font-medium transition-colors ${active ? "text-[var(--accent)]" : "text-muted"}`}>
+                <Icon size={20} strokeWidth={active ? 2.2 : 1.6} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }
