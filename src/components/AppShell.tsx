@@ -36,16 +36,29 @@ export interface ShellUser {
 
 type RecentNotification = { id: number; title: string; message: string | null; read: boolean };
 
-const NAV = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/goals", label: "Goals", icon: Target },
-  { href: "/purchases", label: "Purchase Planner", icon: ShoppingBag },
-  { href: "/tracker", label: "Price Tracker", icon: TrendingDown },
-  { href: "/savings", label: "Savings", icon: PiggyBank },
-  { href: "/achievements", label: "Achievements", icon: Trophy },
-  { href: "/assistant", label: "Chloe · AI", icon: Sparkles },
-  { href: "/notifications", label: "Notifications", icon: Bell },
-  { href: "/settings", label: "Settings", icon: SettingsIcon },
+type NavItem = { href: string; label: string; icon: typeof LayoutDashboard; admin?: boolean };
+type NavGroup = { label: string; items: NavItem[] };
+
+const NAV_GROUPS: NavGroup[] = [
+  {
+    label: "Plan",
+    items: [
+      { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { href: "/goals", label: "Goals", icon: Target },
+      { href: "/purchases", label: "Purchase Planner", icon: ShoppingBag },
+      { href: "/tracker", label: "Price Tracker", icon: TrendingDown },
+      { href: "/savings", label: "Savings", icon: PiggyBank },
+      { href: "/achievements", label: "Achievements", icon: Trophy },
+    ],
+  },
+  {
+    label: "Connect",
+    items: [
+      { href: "/assistant", label: "Chloe · AI", icon: Sparkles },
+      { href: "/notifications", label: "Notifications", icon: Bell },
+      { href: "/settings", label: "Settings", icon: SettingsIcon },
+    ],
+  },
 ];
 
 function applyTheme(theme: string, accent?: string | null) {
@@ -122,31 +135,39 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
     router.refresh();
   };
 
-  const nav = [...NAV];
-  if (user.role === "admin") nav.push({ href: "/admin", label: "Admin Panel", icon: Shield });
+  const groups = NAV_GROUPS.map((g) => ({
+    ...g,
+    items: user.role === "admin"
+      ? [...g.items, { href: "/admin", label: "Admin Panel", icon: Shield, admin: true } as NavItem]
+      : g.items,
+  }));
 
   const SidebarInner = (
     <div className="flex flex-col h-full">
-      <Link href="/dashboard" className="flex items-center gap-2.5 px-2 py-1.5 mb-4">
-        <div className="w-9 h-9 rounded-xl grid place-items-center text-white font-bold"
-          style={{ background: "linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 50%, #2563eb))" }}>
+      <Link href="/dashboard" className="flex items-center gap-2.5 px-2 py-1.5 mb-2">
+        <div className="w-10 h-10 rounded-xl grid place-items-center text-white font-bold brand-mark">
           L
         </div>
         <div>
-          <div className="font-bold leading-tight">LifeOS</div>
+          <div className="font-bold leading-tight">LifeGoals</div>
           <div className="text-[0.65rem] text-muted leading-tight">Goals & Shopping</div>
         </div>
       </Link>
-      <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar">
-        {nav.map((item) => {
-          const active = pathname === item.href || pathname.startsWith(item.href + "/");
-          const Icon = item.icon;
-          return (
-            <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className={`nav-link ${active ? "active" : ""}`}>
-              <Icon size={18} /> <span>{item.label}</span>
-            </Link>
-          );
-        })}
+      <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar py-1">
+        {groups.map((group) => (
+          <div key={group.label}>
+            <div className="nav-section">{group.label}</div>
+            {group.items.map((item) => {
+              const active = pathname === item.href || pathname.startsWith(item.href + "/");
+              const Icon = item.icon;
+              return (
+                <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className={`nav-link ${active ? "active" : ""}`}>
+                  <Icon size={18} /> <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </nav>
       <div className="glass-soft p-3 mt-3 flex items-center gap-3">
         <div className="w-9 h-9 rounded-full grid place-items-center text-lg shrink-0"
@@ -167,7 +188,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
   return (
     <div className="min-h-screen">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col fixed inset-y-0 left-0 w-64 p-4 z-30">{SidebarInner}</aside>
+      <aside className="hidden lg:flex flex-col fixed inset-y-0 left-0 w-72 p-4 z-30">{SidebarInner}</aside>
 
       {/* Mobile drawer */}
       {open && (
@@ -182,7 +203,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
         </div>
       )}
 
-      <div className="lg:pl-64">
+      <div className="lg:pl-72">
         {/* Topbar */}
         <header className="sticky top-0 z-20 glass-nav px-3 sm:px-5 py-2.5 flex items-center gap-3">
           <button className="btn-icon btn-ghost btn lg:hidden" onClick={() => setOpen(true)}>
@@ -228,7 +249,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: ReactN
           </div>
         </header>
 
-        <main className="px-3 sm:px-5 py-5 pb-24 lg:pb-6 max-w-7xl mx-auto">{children}</main>
+        <main key={pathname} className="px-3 sm:px-5 py-5 pb-24 lg:pb-6 max-w-7xl mx-auto page-enter">{children}</main>
       </div>
 
       {/* Mobile bottom nav */}

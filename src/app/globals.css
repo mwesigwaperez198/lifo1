@@ -410,13 +410,50 @@ select.select option { background: var(--bg-2); color: var(--text); }
 /* range slider accent */
 input[type="range"] { accent-color: var(--accent); }
 
+/* ============================ PAGE TRANSITIONS ============================ */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-enter { animation: pageEnter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.965); }
+  to { opacity: 1; transform: scale(1); }
+}
+.scale-in { animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Staggered children entrance */
+.stagger > * { animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.stagger > *:nth-child(1) { animation-delay: 0.03s; }
+.stagger > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger > *:nth-child(3) { animation-delay: 0.13s; }
+.stagger > *:nth-child(4) { animation-delay: 0.18s; }
+.stagger > *:nth-child(5) { animation-delay: 0.23s; }
+.stagger > *:nth-child(6) { animation-delay: 0.28s; }
+.stagger > *:nth-child(7) { animation-delay: 0.33s; }
+.stagger > *:nth-child(8) { animation-delay: 0.38s; }
+
+/* ============================ NAV SECTION DIVIDERS ============================ */
+.nav-section {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  font-weight: 700;
+  padding: 0.85rem 0.75rem 0.35rem;
+}
+.nav-divider { height: 1px; background: var(--border); margin: 0.5rem 0.25rem; }
+
 /* ============================ HERO SECTION ============================ */
 .hero-title {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -0.02em;
 }
+
+.lead { font-size: 1.05rem; line-height: 1.7; color: var(--text-soft); }
 
 /* ============================ CONTAINER ============================ */
 .container-fluid {
@@ -430,3 +467,5 @@ input[type="range"] { accent-color: var(--accent); }
     padding-right: 1.5rem;
   }
 }
+.max-w-7xl { max-width: 80rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
